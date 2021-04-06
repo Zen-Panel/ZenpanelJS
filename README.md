@@ -26,6 +26,8 @@ By becoming a patron of the crab family you will get
 ## [Service](#service)
   * [Authenticate access for the service](#authenticate-access-for-the-service)
   * [Get service data](#get-service-data)
+  * [Control service](#control-service)
+  * [Send command to the service](#send-command-to-the-service)
 
 # Ftp
 ## Authenticate the FTP user
@@ -167,6 +169,66 @@ ZenAPI.service(auth_code, serviceId).getData().then(data => {
     /*
     {
         "message": "Access granted."
+    }
+    */
+}).catch(err => {
+    console.log(err);
+    /*
+    {
+        "error": {
+            "message": "Not authorized."
+        }
+    }
+    */
+});
+```
+
+## Control service
+```js
+// User authentication code
+var auth_code = 'ca221d77-6408-471f-af7f-c370f0bad562';
+
+// Service ID of the requested service
+var serviceId = '605cdd28bc733dae5dab1433';
+
+ZenAPI.service(auth_code, serviceId).start().then(data => {
+    console.log(data);
+    /*
+    {
+        "message": "Server started."
+    }
+    */
+}).catch(err => {
+    console.log(err);
+    /*
+    {
+        "error": {
+            "message": "Not authorized."
+        }
+    }
+    */
+});
+
+ZenAPI.service(..., ...).stop().then(data => ...).catch(err => ...);
+ZenAPI.service(..., ...).kill().then(data => ...).catch(err => ...);
+```
+
+## Send command to the service
+```js
+// User authentication code
+var auth_code = 'ca221d77-6408-471f-af7f-c370f0bad562';
+
+// Service ID of the requested service
+var serviceId = '605cdd28bc733dae5dab1433';
+
+// Command to send
+var command = 'op Notch';
+
+ZenAPI.service(auth_code, serviceId).sendCommand(command).then(data => {
+    console.log(data);
+    /*
+    {
+        "message": "Server started."
     }
     */
 }).catch(err => {
